@@ -1,2 +1,2 @@
 # RunMeAs
-Program there can start a program as user whit admin
+Program there can start a program as user or as admin
