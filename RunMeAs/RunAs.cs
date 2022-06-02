@@ -6,6 +6,8 @@ namespace RunMeAs
 {
     public partial class RunAs : Form
     {
+        private const string hashing = "YouHashingTable";
+
         public RunAs()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace RunMeAs
             tbUserName.Text = settings.UserName;
             try
             {
-                tbPassword.Text = EncryptionWapper.Decrypt(settings.Password, "Abe12");
+                tbPassword.Text = EncryptionWapper.Decrypt(settings.Password, hashing);
             }
             catch (Exception e)
             {
@@ -72,16 +74,10 @@ namespace RunMeAs
             LoadSettings settings = new LoadSettings()
             {
                 FilePath = tbFilePath.Text,
-                Password = EncryptionWapper.Encrypt(tbPassword.Text, "Abe12"),
+                Password = EncryptionWapper.Encrypt(tbPassword.Text, hashing),
                 UserName = tbUserName.Text,
                 RunAsAdmin = cbRunAsAdmin.Checked
             };
-
-            if (File.Exists(Path.Combine(Folder.ProgramFolder, "settings.json")))
-            {
-                File.Delete(Path.Combine(Folder.ProgramFolder, "settings.json"));
-            }
-
 
             JsonWapper.SerializeToFile(settings, Path.Combine(Folder.ProgramFolder, "settings.json"));
 
